@@ -14,7 +14,7 @@ fi
 latest_ref() {
     # Get the latest tag matching CAKE_VERSION.*
     TAG=$(curl --silent https://api.github.com/repos/cakephp/cakephp/git/refs/tags)
-    TAG=$(echo "$TAG" | grep -Ei "\"refs/tags/$CAKE_VERSION\." | tail -1)
+    TAG=$(echo "$TAG" | grep -oEi "tags/$CAKE_VERSION.." | tail -1 | grep -oEi "$CAKE_VERSION..")
     if [ -n "$TAG" ]; then
         echo "$TAG"
         exit 0
