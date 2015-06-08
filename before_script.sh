@@ -12,25 +12,9 @@ fi
 # MAJOR.MINOR semantic versioning.
 #
 latest_ref() {
-    # Get version from master branch
-    MASTER=$(curl --silent https://raw.githubusercontent.com/cakephp/cakephp/2.6/lib/Cake/VERSION.txt)
-    MASTER=$(echo "$MASTER" | tail -1 | grep -Ei "^$CAKE_VERSION\.")
-    if [ -n "$MASTER" ]; then
-        echo "master"
-        exit 0
-    fi
-
-    # Check if any branch matches CAKE_VERSION
-    BRANCH=$(curl --silent https://api.github.com/repos/cakephp/cakephp/git/refs/heads)
-    BRANCH=$(echo "$BRANCH" | grep -Ei "\"refs/heads/$CAKE_VERSION\"" | grep -oEi "$CAKE_VERSION" | tail -1)
-    if [ -n "$BRANCH" ]; then
-        echo "$BRANCH"
-        exit 0
-    fi
-
     # Get the latest tag matching CAKE_VERSION.*
     TAG=$(curl --silent https://api.github.com/repos/cakephp/cakephp/git/refs/tags)
-    TAG=$(echo "$TAG" | grep -Ei "\"refs/tags/$CAKE_VERSION\." | grep -oEi "$CAKE_VERSION\.[^\"]+" | tail -1)
+    TAG=$(echo "$TAG" | grep -Ei "\"refs/tags/$CAKE_VERSION\." | tail -1)
     if [ -n "$TAG" ]; then
         echo "$TAG"
         exit 0
@@ -67,8 +51,8 @@ if [ -z "$CAKE_REF" ]; then
     exit 1
 fi
 
-echo "Using CakePHP branch $CAKE_REF"
-git clone git://github.com/cakephp/cakephp.git --branch $CAKE_REF --depth 1 ../cakephp
+echo "Using CakePHP tag $CAKE_REF"
+git clone git://github.com/cakephp/cakephp.git -b $CAKE_REF --depth 1 ../cakephp
 
 # Prepare plugin
 cd ../cakephp/app
