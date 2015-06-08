@@ -67,6 +67,7 @@ if [ -z "$CAKE_REF" ]; then
     exit 1
 fi
 
+echo "Using CakePHP branch $CAKE_REF"
 git clone git://github.com/cakephp/cakephp.git --branch $CAKE_REF --depth 1 ../cakephp
 
 # Prepare plugin
