@@ -46,12 +46,12 @@ SELF_PATH=$(cd "$(dirname "$0")"; pwd)
 
 # Clone CakePHP repository
 CAKE_REF=$(latest_ref)
+echo "Using CakePHP version $CAKE_REF"
 if [ -z "$CAKE_REF" ]; then
     echo "Found no valid ref to match with version $CAKE_VERSION" >&2
     exit 1
 fi
 
-echo "Using CakePHP tag $CAKE_REF"
 git clone git://github.com/cakephp/cakephp.git -b $CAKE_REF --depth 1 ../cakephp
 
 # Prepare plugin
