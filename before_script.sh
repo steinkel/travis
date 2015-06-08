@@ -1,10 +1,10 @@
 #!/bin/bash
 
+composer self-update
+
 if [ "$PHPCS" = '1' ]; then
-    pear channel-discover pear.cakephp.org
-    pear install --alldeps cakephp/CakePHP_CodeSniffer
-    phpenv rehash
-    exit 0
+	composer require 'cakephp/cakephp-codesniffer:1.*';
+	exit 0
 fi
 
 #
