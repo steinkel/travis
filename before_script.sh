@@ -13,8 +13,9 @@ fi
 #
 latest_ref() {
     # Get the latest tag matching CAKE_VERSION.*
+    CAKE_VERSION_ESCAPED=${CAKE_VERSION/./\\.}
     TAG=$(curl --silent https://api.github.com/repos/cakephp/cakephp/git/refs/tags)
-    TAG=$(echo "$TAG" | grep -oEi "tags/$CAKE_VERSION.." | tail -1 | grep -oEi "$CAKE_VERSION..")
+    TAG=$(echo "$TAG" | grep -oEi "tags/$CAKE_VERSION_ESCAPED.." | tail -1 | grep -oEi "$CAKE_VERSION_ESCAPED..")
     if [ -n "$TAG" ]; then
         echo "$TAG"
         exit 0
